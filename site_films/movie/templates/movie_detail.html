@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    {{ movie.name }}
+{% endblock %}
+{% block content %}
+    <div class="row" style="width: 100%;">
+        <div class="col-md-4">
+            <img class="item-img" src="{{ movie.poster.url }}">
+        </div>
+         <div class="col-md-8">
+            <h1>{{ movie.name }}</h1>
+             <h6 class="fw-bolder"> Genre:
+                {% for g in movie.genre.all %}
+                    {{ g.name }}
+                {% endfor %}
+            </h6>
+            <h6 class="fw-bolder"> Country: {{ movie.country }} </h6>
+            <h6 class="fw-bolder"> Director:
+                {% for d in movie.director.all %}
+                    {{ d.first_name }} {{ d.last_name }}
+                {% endfor %}
+            </h6>
+            <h6 class="fw-bolder"> Actors:
+                {% for a in movie.actors.all %}
+                    {{ a.first_name }} {{ a.last_name }}
+                {% endfor %}
+            </h6>
+            <h6 class="fw-bolder"> Year: {{ movie.year }} </h6>
+            {{ movie.description|linebreaks }}
+         </div>
+        <br>
+        <ul class="navbar navbar-expand-lg navbar-light bg-light" >
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'movie:update' pk=movie.id %}"> ✎ Redact</a></div>
+            </div>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'movie:delete' m_id=movie.id %}"> 🗑 Delete</a></div>
+            </div>
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}New films from API{% endblock %}
+
+{% block content %}
+    <div class="order" style="width: 100%">
+        <div>
+            <h1>New films from API</h1>
+            <h3>You may download films from API another website</h3>
+        </div>
+        <div class="order-info">
+            <form action="{% url 'movie:download_movies' %}" method="post" enctype="multipart/form-data" class="order-form" style="text-align: right; margin-left: 40px;">
+                {{ form.as_p }}
+                <p><input class="btn btn-outline-dark mt-auto" type="submit" value="Add {{ arg }}"></p>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

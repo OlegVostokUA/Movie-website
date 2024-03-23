@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+    {% block content %}
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Genres </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                    <a class="dropdown-item" href="{% url 'movie:movie_list' %}"> All films </a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                {% for genre in genres %}
+                <li>
+                    <a class="dropdown-item" href="#">{{ genre.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</div>
+    {% for mov in movies %}
+        <!-- Section-->
+        <div class="col mb-5">
+            <div class="card-custom">
+                <!-- Product image-->
+                <img class="card-img-top" src="{{ mov.poster.url }}" alt="..." />
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder"> {{ mov.name }} </h5>
+                        <h6 class="fw-bolder"> Genre:
+                            {% for g in mov.genre.all %}
+                                {{ g.name }}
+                            {% endfor %}
+                        </h6>
+                        <h6 class="fw-bolder"> Country: {{ mov.country }} </h6>
+                        <h6 class="fw-bolder"> Director:
+                            {% for d in mov.director.all %}
+                                {{ d.first_name }} {{ d.last_name }}
+                            {% endfor %}
+                        </h6>
+                        <h6 class="fw-bolder"> Actors:
+                            {% for a in mov.actors.all %}
+                                {{ a.first_name }} {{ a.last_name }}
+                            {% endfor %}
+                        </h6>
+                        <h6 class="fw-bolder"> Year: {{ mov.year }} </h6>
+                    </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ mov.get_absolute_url }}">View detail</a></div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div>
+        {% include "pagination.html" with page=movies %}
+    </div>
+    {% endblock %}
+

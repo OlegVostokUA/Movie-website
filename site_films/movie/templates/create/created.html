@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Thank you{% endblock %}
+
+{% block content %}
+<div class="order-list">
+    <h1>Thank you</h1>
+    <p>Your {{ title_item }} {{ new_item }} {% if new_item_2 %} {{ new_item_2 }} {% endif %} has been successfully added.
+</div>
+{% endblock %}
